@@ -6,6 +6,8 @@ import HeroText from "../components/HeroText";
 import ParallaxBackground from "../components/parallaxBackground";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMediaQuery } from "react-responsive";
+import { Suspense } from "react";
+import Loader from "../components/Loader";
 
 const Hero = () => {
     const isMobile = useMediaQuery({ maxWidth: 853 });
@@ -17,10 +19,12 @@ const Hero = () => {
                 style={{ width: "100vw", height: "100vh" }}
             >
                 <Canvas camera={{ position: [0, 1, 3] }}>
-                    <Float>
-                        <Astronaut scale={isMobile && 0.23} position={isMobile && [0, -1.5, 0]} />
-                    </Float>
-                    <Rig />
+                    <Suspense fallback={<Loader />}>
+                        <Float>
+                            <Astronaut scale={isMobile && 0.23} position={isMobile && [0, -1.5, 0]} />
+                        </Float>
+                        <Rig />
+                    </Suspense>
                 </Canvas>
             </figure>
         </section>
